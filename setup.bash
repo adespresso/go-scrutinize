@@ -1,4 +1,6 @@
 # This script installs go on Scrutinizer for github repositories
+# To use:
+# "$(curl -fsSL https://raw.githubusercontent.com/phayes/go-scrutinize/master/setup.bash)" 
 
 export PROJECT=$(echo $SCRUTINIZER_PROJECT | sed 's/g/github.com/')
 export DOMAIN=$(echo $PROJECT | cut -d'/' -f1)
