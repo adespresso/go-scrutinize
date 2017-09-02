@@ -122,6 +122,7 @@ func lintFiles(filenames ...string) {
 			continue
 		}
 		files[filename] = src
+		cstyle.EnsureFile(filename)
 	}
 
 	l := new(lint.Linter)
