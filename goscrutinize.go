@@ -94,6 +94,7 @@ func main() {
 	}
 
 	if *outputFormat == outputFormatCheckStyle {
+		fmt.Println(`<?xml version="1.0" encoding="UTF-8"?>`)
 		fmt.Println(cstyle)
 	}
 
