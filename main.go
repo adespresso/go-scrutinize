@@ -1,9 +1,10 @@
 package main
 
 import (
-	"flag"
-	"fmt"
+	"io/ioutil"
+	"log"
 	"os"
+	"os/exec"
 
 	"github.com/phayes/checkstyle"
 )
@@ -12,27 +13,46 @@ var (
 	cstyle = checkstyle.New()
 )
 
-var (
-	lintMinConfidence = flag.Float64("lint_min_confidence", 0.8, "lint: minimum confidence of a problem to print it")
-)
-
-func usage() {
-	fmt.Fprintf(os.Stderr, "Usage of %s:\n", os.Args[0])
-	fmt.Fprintf(os.Stderr, "\tgolint [flags] # runs on package in current directory\n")
-	fmt.Fprintf(os.Stderr, "\tgolint [flags] [packages]\n")
-	fmt.Fprintf(os.Stderr, "\tgolint [flags] [directories] # where a '/...' suffix includes all sub-directories\n")
-	fmt.Fprintf(os.Stderr, "\tgolint [flags] [files] # all must belong to a single package\n")
-	fmt.Fprintf(os.Stderr, "Flags:\n")
-	flag.PrintDefaults()
-}
-
 func main() {
-	flag.Usage = usage
-	flag.Parse()
 
-	// Do linting
-	lintDir(".")
+	homeEnv := os.Getenv("HOME")
+	gopathEnv := os.Getenv("GOPATH")
+	if gopathEnv == "" {
+		gopathEnv = homeEnv + "/go"
+	}
+	goMetaLinterCmd := gopathEnv + "/bin/gometalinter"
 
-	fmt.Println(`<?xml version="1.0" encoding="UTF-8"?>`)
-	fmt.Println(cstyle)
+	// Install gometalinter -- no-op if already installed
+	cmd := exec.Command("go", "get", "github.com/alecthomas/gometalinter")
+	err := cmd.Run()
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	// Install all gometalinter dependancies -- no-op if already installed
+	cmd = exec.Command(goMetaLinterCmd, "install")
+	err = cmd.Run()
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	// Configure the metalinter
+	if _, err := os.Stat("go-scrutinize.config"); os.IsNotExist(err) {
+		cmd = exec.Command(goMetaLinterCmd, "--checkstyle")
+	} else {
+		cmd = exec.Command(goMetaLinterCmd, "--checkstyle", "--config=go-scrutinize.config")
+	}
+
+	// Run the metalinter
+	out, err := cmd.Output()
+	if err != nil {
+		exitErr := err.(*exec.ExitError)
+		if len(exitErr.Stderr) != 0 {
+			log.Fatal(string(exitErr.Stderr))
+		}
+	}
+
+	// Write the output
+	ioutil.WriteFile("checkstyle_report.xml", out, os.ModePerm)
+
 }

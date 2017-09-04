@@ -1,0 +1,12 @@
+build:
+    dependencies:
+        before:
+            - source install-golang
+
+    tests:
+        override:
+            -
+                command: 'cd $GOPATH/src/$PROJECT && go run *.go'
+                analysis:
+                    file: 'checkstyle_report.xml'
+                    format: 'general-checkstyle' 
