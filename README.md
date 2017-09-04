@@ -10,7 +10,7 @@ Example `.scrutinizer.yml` file:
 build:
     dependencies:
         before:
-            - '"$(curl -fsSL https://raw.githubusercontent.com/phayes/go-scrutinize/master/install-golang)" | source /dev/stdin'
+            - 'source <(curl -fsSL https://raw.githubusercontent.com/phayes/go-scrutinize/master/install-golang)'
 
     tests:
         override:
