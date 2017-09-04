@@ -10,3 +10,6 @@ build:
                 analysis:
                     file: 'checkstyle_report.xml'
                     format: 'general-checkstyle' 
+                coverage:
+                    file: 'coverage.xml'
+                    format: 'clover'
