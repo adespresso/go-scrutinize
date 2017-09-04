@@ -2,7 +2,7 @@
 # To use:
 # "$(curl -fsSL https://raw.githubusercontent.com/phayes/go-scrutinize/master/install-golang)" | source /dev/stdin
 
-export PROJECT=$(echo $SCRUTINIZER_PROJECT | sed 's/g/github.com/')
+export PROJECT=$(echo $SCRUTINIZER_PROJECT | sed 's/^g/github.com/' | sed 's/^b/bitbucket.com/')
 export DOMAIN=$(echo $PROJECT | cut -d'/' -f1)
 export OWNER=$(echo $PROJECT | cut -d'/' -f2)
 export PACKAGE=$(echo $PROJECT | cut -d'/' -f3)
