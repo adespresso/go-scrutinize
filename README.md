@@ -4,7 +4,7 @@ Scrutinizer-CI support for golang.
 
 This package generates code-coverage, does static analysis, and runs tests for Scrutinizer-CI (scrutinizer-ci.com).  
 
-Example .scrutinizer.yml file:
+Example `.scrutinizer.yml` file:
 
 ```yml
 build:
