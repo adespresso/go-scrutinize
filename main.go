@@ -34,7 +34,7 @@ func main() {
 
 	// Set up project
 	if len(scrutinizerProjectEnv) == 0 {
-		log.Fatal("Not running without scrutinizer environemnt. SCRUTINIZER_PROJECT environment variable not found")
+		log.Fatal("Not running without scrutinizer environment. SCRUTINIZER_PROJECT environment variable not found")
 	}
 
 	projectFull = regexGithub.ReplaceAllString(scrutinizerProjectEnv, "github.com")
@@ -48,7 +48,7 @@ func main() {
 	projectOwner = projectParts[1]
 	projectProject = projectParts[2]
 
-	// Install all dependancies
+	// Install all dependencies
 	cmd := exec.Command("go", "get", "-t", "./...")
 	_, err := cmd.Output()
 	if err != nil {
@@ -80,7 +80,7 @@ func metalinter() {
 		log.Fatal("go get github.com/alecthomas/gometalinter", err)
 	}
 
-	// Install all gometalinter dependancies -- no-op if already installed
+	// Install all gometalinter dependencies -- no-op if already installed
 	cmd = exec.Command(goMetaLinterCmd, "--install")
 	_, err = cmd.Output()
 	if err != nil {
