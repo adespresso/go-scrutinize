@@ -98,15 +98,13 @@ func metalinter() {
 		cmd = exec.Command(goMetaLinterCmd, "--checkstyle", "--config=go-scrutinize.config")
 	}
 
-	// Run the metalinter
+	// Run the metalinter -- note that will return non-zero exit status
 	out, err := cmd.Output()
 	if err != nil {
 		exitErr := err.(*exec.ExitError)
 		if len(exitErr.Stderr) != 0 {
 			log.Println(string(exitErr.Stderr))
 		}
-		log.Println(string(out))
-		log.Fatal(goMetaLinterCmd, err)
 	}
 
 	// Write the output from the metalinter
