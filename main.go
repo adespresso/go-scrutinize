@@ -81,14 +81,14 @@ func metalinter() {
 	}
 
 	// Install all gometalinter dependancies -- no-op if already installed
-	cmd = exec.Command(goMetaLinterCmd, "install")
+	cmd = exec.Command(goMetaLinterCmd, "--install")
 	_, err = cmd.Output()
 	if err != nil {
 		exitErr, ok := err.(*exec.ExitError)
 		if ok && len(exitErr.Stderr) != 0 {
 			log.Println(string(exitErr.Stderr))
 		}
-		log.Fatal(goMetaLinterCmd, "install", err)
+		log.Fatal(goMetaLinterCmd, "--install", err)
 	}
 
 	// Configure the metalinter
