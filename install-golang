@@ -15,16 +15,17 @@ sudo mv go /usr/local
 # Install bzr
 sudo apt-get -y install bzr
 
-# Set-up gopath
+# Set-up gopath and goroot
+export GOROOT=/usr/local/go
 mkdir ~/go
-export GOROOT=$HOME/go
-mkdir -p $GOROOT/src/$DOMAIN/$OWNER
-ln -s ~/build $GOROOT/src/$DOMAIN/$OWNER/$PACKAGE
+export GOPATH=$HOME/go
+mkdir -p $GOPATH/src/$DOMAIN/$OWNER
+ln -s ~/build $GOPATH/src/$DOMAIN/$OWNER/$PACKAGE
 export PATH="$PATH:$GOROOT/bin"
 export PROJECTPATH=$GOROOT/src/$PROJECT
 
 # Add bin directories to PATH
-export PATH=$PATH:/usr/local/go/bin:/$GOROOT/bin
+export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
 
 # Install coverage tools
 go get github.com/phayes/go-scrutinize
