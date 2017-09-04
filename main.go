@@ -141,6 +141,10 @@ func testAndCoverage() {
 		}
 	}
 
+	// Rewrite all filenames to use /home/scrutinizer/build paths
+	coveragexml := strings.Replace(string(xmlout), gopathEnv+"/src/"+projectFull, "/home/scrutinizer/build", 0)
+
 	// Write the output from the metalinter
-	ioutil.WriteFile("coverage.xml", xmlout, os.ModePerm)
+	ioutil.WriteFile("coverage.xml", []byte(coveragexml), os.ModePerm)
+
 }
