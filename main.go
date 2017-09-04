@@ -21,15 +21,15 @@ var (
 var (
 	cstyle                                                   = checkstyle.New()
 	homeEnv                                                  = os.Getenv("HOME")
-	gopathEnv                                                = os.Getenv("GOPATH")
+	gorootEnv                                                = os.Getenv("GOPATH")
 	scrutinizerProjectEnv                                    = os.Getenv("SCRUTINIZER_PROJECT")
 	projectFull, projectDomain, projectOwner, projectProject string
 )
 
 func main() {
 	// Set up environment variables
-	if gopathEnv == "" {
-		gopathEnv = homeEnv + "/go"
+	if gorootEnv == "" {
+		gorootEnv = homeEnv + "/go"
 	}
 
 	// Set up project
@@ -67,7 +67,7 @@ func main() {
 }
 
 func metalinter() {
-	goMetaLinterCmd := gopathEnv + "/bin/gometalinter"
+	goMetaLinterCmd := gorootEnv + "/bin/gometalinter"
 
 	// Install gometalinter -- no-op if already installed
 	cmd := exec.Command("go", "get", "github.com/alecthomas/gometalinter")
@@ -113,10 +113,10 @@ func metalinter() {
 }
 
 func testAndCoverage() {
-	goConvCmd := gopathEnv + "/bin/gocov"
-	goConvXMLCmd := gopathEnv + "/bin/gocov-xml"
+	goConvCmd := gorootEnv + "/bin/gocov"
+	goConvXMLCmd := gorootEnv + "/bin/gocov-xml"
 
-	// Install the coverage tools
+	// Install the coverage tool covov
 	cmd := exec.Command("go", "get", "github.com/axw/gocov/...")
 	_, err := cmd.Output()
 	if err != nil {
@@ -127,6 +127,7 @@ func testAndCoverage() {
 		log.Fatal("go", "get", "github.com/axw/gocov/...", err)
 	}
 
+	// Install the coverage file translation tool gocov-xml
 	cmd = exec.Command("go", "get", "github.com/AlekSi/gocov-xml")
 	_, err = cmd.Output()
 	if err != nil {
@@ -161,7 +162,7 @@ func testAndCoverage() {
 	}
 
 	// Rewrite all filenames to use /home/scrutinizer/build paths
-	coveragexml := strings.Replace(string(xmlout), gopathEnv+"/src/"+projectFull, "/home/scrutinizer/build", 0)
+	coveragexml := strings.Replace(string(xmlout), gorootEnv+"/src/"+projectFull, "/home/scrutinizer/build", 0)
 
 	// Write the output from the metalinter
 	ioutil.WriteFile("coverage.xml", []byte(coveragexml), os.ModePerm)
