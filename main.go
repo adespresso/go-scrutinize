@@ -105,7 +105,8 @@ func metalinter() {
 		if len(exitErr.Stderr) != 0 {
 			log.Println(string(exitErr.Stderr))
 		}
-		log.Fatal(goMetaLinterCmd, "install", err)
+		log.Println(string(out))
+		log.Fatal(goMetaLinterCmd, err)
 	}
 
 	// Write the output from the metalinter
