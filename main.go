@@ -140,12 +140,9 @@ func testAndCoverage() {
 
 	// Run tests with coverage
 	cmd = exec.Command(goConvCmd, "test", "./...", "-race")
+	cmd.Stderr = os.Stderr // pipe stderr directly
 	gocovout, err := cmd.Output()
 	if err != nil {
-		exitErr := err.(*exec.ExitError)
-		if len(exitErr.Stderr) != 0 {
-			log.Println(string(exitErr.Stderr))
-		}
 		log.Fatal(goConvCmd, "test", "./...", "-race", err)
 	}
 
