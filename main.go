@@ -50,12 +50,13 @@ func main() {
 
 	// Install all dependencies
 	cmd := exec.Command("go", "get", "-t", "./...")
-	_, err := cmd.Output()
+	output, err := cmd.Output()
 	if err != nil {
 		exitErr, ok := err.(*exec.ExitError)
 		if ok && len(exitErr.Stderr) != 0 {
 			log.Println(string(exitErr.Stderr))
 		}
+		log.Println(output)
 		log.Fatal("go get -t ./...", err)
 	}
 
