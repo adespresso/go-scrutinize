@@ -21,15 +21,15 @@ var (
 var (
 	cstyle                                                   = checkstyle.New()
 	homeEnv                                                  = os.Getenv("HOME")
-	gorootEnv                                                = os.Getenv("GOPATH")
+	gopathEnv                                                = os.Getenv("GOPATH")
 	scrutinizerProjectEnv                                    = os.Getenv("SCRUTINIZER_PROJECT")
 	projectFull, projectDomain, projectOwner, projectProject string
 )
 
 func main() {
 	// Set up environment variables
-	if gorootEnv == "" {
-		gorootEnv = homeEnv + "/go"
+	if gopathEnv == "" {
+		gopathEnv = homeEnv + "/go"
 	}
 
 	// Set up project
@@ -67,7 +67,7 @@ func main() {
 }
 
 func metalinter() {
-	goMetaLinterCmd := gorootEnv + "/bin/gometalinter"
+	goMetaLinterCmd := gopathEnv + "/bin/gometalinter"
 
 	// Install gometalinter -- no-op if already installed
 	cmd := exec.Command("go", "get", "github.com/alecthomas/gometalinter")
@@ -113,8 +113,8 @@ func metalinter() {
 }
 
 func testAndCoverage() {
-	goConvCmd := gorootEnv + "/bin/gocov"
-	goConvXMLCmd := gorootEnv + "/bin/gocov-xml"
+	goConvCmd := gopathEnv + "/bin/gocov"
+	goConvXMLCmd := gopathEnv + "/bin/gocov-xml"
 
 	// Install the coverage tool covov
 	cmd := exec.Command("go", "get", "github.com/axw/gocov/...")
@@ -162,7 +162,7 @@ func testAndCoverage() {
 	}
 
 	// Rewrite all filenames to use /home/scrutinizer/build paths
-	coveragexml := strings.Replace(string(xmlout), gorootEnv+"/src/"+projectFull, "/home/scrutinizer/build", 0)
+	coveragexml := strings.Replace(string(xmlout), gopathEnv+"/src/"+projectFull, "/home/scrutinizer/build", 0)
 
 	// Write the output from the metalinter
 	ioutil.WriteFile("coverage.xml", []byte(coveragexml), os.ModePerm)
