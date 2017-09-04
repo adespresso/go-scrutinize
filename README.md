@@ -1,4 +1,5 @@
 # go-scrutinize
+[![Build Status](https://scrutinizer-ci.com/g/phayes/go-scrutinize/badges/build.png?b=master)](https://scrutinizer-ci.com/g/phayes/go-scrutinize/build-status/master)
 
 Scrutinizer-CI support for golang.
 
