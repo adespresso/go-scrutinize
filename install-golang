@@ -21,8 +21,7 @@ mkdir ~/go
 export GOPATH=$HOME/go
 mkdir -p $GOPATH/src/$DOMAIN/$OWNER
 ln -s ~/build $GOPATH/src/$DOMAIN/$OWNER/$PACKAGE
-export PATH="$PATH:$GOROOT/bin"
-export PROJECTPATH=$GOROOT/src/$PROJECT
+export PROJECTPATH=$GOPATH/src/$PROJECT
 
 # Add bin directories to PATH
 export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
