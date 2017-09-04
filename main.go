@@ -118,15 +118,23 @@ func testAndCoverage() {
 
 	// Install the coverage tools
 	cmd := exec.Command("go", "get", "github.com/axw/gocov/...")
-	err := cmd.Run()
+	_, err := cmd.Output()
 	if err != nil {
-		log.Fatal("go get github.com/axw/gocov/...", err)
+		exitErr := err.(*exec.ExitError)
+		if len(exitErr.Stderr) != 0 {
+			log.Println(string(exitErr.Stderr))
+		}
+		log.Fatal("go", "get", "github.com/axw/gocov/...", err)
 	}
 
 	cmd = exec.Command("go", "get", "github.com/AlekSi/gocov-xml")
-	err = cmd.Run()
+	_, err = cmd.Output()
 	if err != nil {
-		log.Fatal("go get github.com/AlekSi/gocov-xml", err)
+		exitErr := err.(*exec.ExitError)
+		if len(exitErr.Stderr) != 0 {
+			log.Println(string(exitErr.Stderr))
+		}
+		log.Fatal("go", "get", "github.com/AlekSi/gocov-xml", err)
 	}
 
 	// Run tests with coverage
@@ -135,8 +143,9 @@ func testAndCoverage() {
 	if err != nil {
 		exitErr := err.(*exec.ExitError)
 		if len(exitErr.Stderr) != 0 {
-			log.Fatal(string(exitErr.Stderr))
+			log.Println(string(exitErr.Stderr))
 		}
+		log.Fatal(goConvCmd, "test", "./...", "-race", err)
 	}
 
 	// Convert to clover format
@@ -146,8 +155,9 @@ func testAndCoverage() {
 	if err != nil {
 		exitErr := err.(*exec.ExitError)
 		if len(exitErr.Stderr) != 0 {
-			log.Fatal(string(exitErr.Stderr))
+			log.Println(string(exitErr.Stderr))
 		}
+		log.Fatal(goConvXMLCmd, err)
 	}
 
 	// Rewrite all filenames to use /home/scrutinizer/build paths
