@@ -93,9 +93,9 @@ func metalinter() {
 
 	// Configure the metalinter
 	if _, err := os.Stat("go-scrutinize.config"); os.IsNotExist(err) {
-		cmd = exec.Command(goMetaLinterCmd, "--checkstyle")
+		cmd = exec.Command(goMetaLinterCmd, "./...", "--checkstyle")
 	} else {
-		cmd = exec.Command(goMetaLinterCmd, "--checkstyle", "--config=go-scrutinize.config")
+		cmd = exec.Command(goMetaLinterCmd, "./...", "--checkstyle", "--config=go-scrutinize.config")
 	}
 
 	// Run the metalinter -- note that will return non-zero exit status
