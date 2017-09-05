@@ -28,4 +28,6 @@ build:
 
 ## Example Scrutinizer Report
 
+This is an example of what the Scrutinizer Report page looks like for a golang project.
+
 ![Example Scrutinizer Report](http://i.imgur.com/KCb7e7Y.png)
