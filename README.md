@@ -32,4 +32,4 @@ build:
 
 This is an example of what the Scrutinizer Report page looks like for a golang project.
 
-![Example Scrutinizer Report](http://i.imgur.com/KCb7e7Y.png)
+![Example Scrutinizer Report](http://i.imgur.com/1iBxgLb.png)
