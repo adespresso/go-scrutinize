@@ -8,18 +8,14 @@ import (
 	"os/exec"
 	"regexp"
 	"strings"
-
-	"github.com/phayes/checkstyle"
 )
 
 var (
 	regexGithub    = regexp.MustCompile("^g")
 	regexBitbucket = regexp.MustCompile("^b")
-	regexGitURI    = regexp.MustCompile("((git|ssh|http(s)?)|(git@[\\w\\.]+))(:(//)?)([\\w\\.@\\:/\\-~]+)(\\.git)(/)?")
 )
 
 var (
-	cstyle                                                   = checkstyle.New()
 	homeEnv                                                  = os.Getenv("HOME")
 	gopathEnv                                                = os.Getenv("GOPATH")
 	scrutinizerProjectEnv                                    = os.Getenv("SCRUTINIZER_PROJECT")
@@ -93,7 +89,7 @@ func metalinter() {
 	}
 
 	// Configure the metalinter
-	if _, err := os.Stat("go-scrutinize.config"); os.IsNotExist(err) {
+	if _, err = os.Stat("go-scrutinize.config"); os.IsNotExist(err) {
 		cmd = exec.Command(goMetaLinterCmd, "./...", "--checkstyle")
 	} else {
 		cmd = exec.Command(goMetaLinterCmd, "./...", "--checkstyle", "--config=go-scrutinize.config")
@@ -109,7 +105,10 @@ func metalinter() {
 	}
 
 	// Write the output from the metalinter
-	ioutil.WriteFile("checkstyle_report.xml", out, os.ModePerm)
+	err = ioutil.WriteFile("checkstyle_report.xml", out, os.ModePerm)
+	if err != nil {
+		log.Fatal("Unable to write checkstyle_report.xml - ", err)
+	}
 }
 
 func testAndCoverage() {
@@ -159,9 +158,12 @@ func testAndCoverage() {
 	}
 
 	// Rewrite all filenames to use /home/scrutinizer/build paths
-	coveragexml := strings.Replace(string(xmlout), gopathEnv+"/src/"+projectFull, "/home/scrutinizer/build", 0)
+	coveragexml := strings.Replace(string(xmlout), gopathEnv+"/src/"+projectFull, "/home/scrutinizer/build", -1)
 
 	// Write the output from the metalinter
-	ioutil.WriteFile("coverage.xml", []byte(coveragexml), os.ModePerm)
+	err = ioutil.WriteFile("coverage.xml", []byte(coveragexml), os.ModePerm)
+	if err != nil {
+		log.Fatal("Unable to write coverage.xml - ", err)
+	}
 
 }
