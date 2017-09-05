@@ -8,7 +8,7 @@ This package generates code-coverage, does static analysis, and runs tests for [
 
 ## Getting Started
 
-Copy and paste the yaml below into your `.scrutinizer.yml` file to get started.
+Copy and paste the yml below into your `.scrutinizer.yml` file to get started.
 
 ```yml
 build:
