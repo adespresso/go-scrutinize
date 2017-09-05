@@ -6,7 +6,7 @@ Scrutinizer-CI support for golang.
 
 This package generates code-coverage, does static analysis, and runs tests for [Scrutinizer-CI](https://scrutinizer-ci.com).  
 
-Example `.scrutinizer.yml` file:
+## Example `.scrutinizer.yml` file
 
 ```yml
 build:
@@ -25,3 +25,7 @@ build:
                     file: 'checkstyle_report.xml'
                     format: 'general-checkstyle'
 ```
+
+## Example Scrutinizer Report
+
+![Example Scrutinizer Report](http://i.imgur.com/KCb7e7Y.png)
