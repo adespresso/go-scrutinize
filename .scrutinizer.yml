@@ -6,7 +6,7 @@ build:
     tests:
         override:
             -
-                command: 'cd $GOPATH/src/$PROJECT && go run goscrutinize.go'
+                command: 'cd $PROJECTPATH && go-scrutinize'
                 analysis:
                     file: 'checkstyle_report.xml'
                     format: 'general-checkstyle' 
