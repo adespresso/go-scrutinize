@@ -1,15 +1,15 @@
 build:
     dependencies:
         before:
-            - source install-golang
+            - 'source <(curl -fsSL https://raw.githubusercontent.com/phayes/go-scrutinize/master/install-golang)'
 
     tests:
         override:
             -
                 command: 'cd $PROJECTPATH && go-scrutinize'
-                analysis:
-                    file: 'checkstyle_report.xml'
-                    format: 'general-checkstyle' 
                 coverage:
                     file: 'coverage.xml'
                     format: 'clover'
+                analysis:
+                    file: 'checkstyle_report.xml'
+                    format: 'general-checkstyle'
