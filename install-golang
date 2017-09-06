@@ -34,9 +34,9 @@ go get github.com/phayes/go-scrutinize
 # Set-up github and bitbucket for private go dependancies
 if [[ $DOMAIN == "github.com" ]] 
 then
-  git config --global url.ssh://git@github.com/.insteadOf https://github.com/;
+  git config --global url.https://$GITHUB_ACCESS_TOKEN@github.com/.insteadOf "https://github.com/";
 fi
 if [[ $DOMAIN == "bitbucket.org" ]] 
 then
-  git config --global url.ssh://git@bitbucket.org/.insteadOf https://bitbucket.org/;
+  git config --global url.https://$BITBUCKET_TOKEN@bitbucket.org/.insteadOf "https://bitbucket.org/";
 fi
