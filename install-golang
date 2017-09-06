@@ -31,12 +31,10 @@ export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
 # Install coverage tools
 go get github.com/phayes/go-scrutinize
 
-# Set-up github and bitbucket for private go dependancies
-if [[ $DOMAIN == "github.com" ]] 
+# Set-up github for private go dependancies
+# bitbucket should already work
+if [[ $DOMAIN == "github.com" && $GITHUB_ACCESS_TOKEN != "" ]] 
 then
+  git config --global --unset url."ssh://git@github.com/".insteadOf
   git config --global url.https://$GITHUB_ACCESS_TOKEN@github.com/.insteadOf "https://github.com/";
-fi
-if [[ $DOMAIN == "bitbucket.org" ]] 
-then
-  git config --global url."git@bitbucket.org:".insteadOf "https://bitbucket.org/";
 fi
