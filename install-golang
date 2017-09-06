@@ -30,9 +30,11 @@ export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
 go get github.com/phayes/go-scrutinize
 
 # Set-up github and bitbucket for private go dependancies
-if [ $DOMAIN == 'github.com' ] then
+if [ $DOMAIN == 'github.com' ] 
+then
   git config --global url.ssh://git@github.com/.insteadOf https://github.com/
 fi
-if [ $DOMAIN == 'bitbucket.org' ] then
+if [ $DOMAIN == 'bitbucket.org' ] 
+then
   git config --global url.ssh://git@bitbucket.org/.insteadOf https://bitbucket.org/
 fi
