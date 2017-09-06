@@ -2,7 +2,7 @@
 # To use:
 # source <(curl -fsSL https://raw.githubusercontent.com/phayes/go-scrutinize/master/install-golang)
 
-export PROJECT=$(echo $SCRUTINIZER_PROJECT | sed 's/^g/github.com/' | sed 's/^b/bitbucket.com/')
+export PROJECT=$(echo $SCRUTINIZER_PROJECT | sed 's/^g/github.com/' | sed 's/^b/bitbucket.org/')
 export DOMAIN=$(echo $PROJECT | cut -d'/' -f1)
 export OWNER=$(echo $PROJECT | cut -d'/' -f2)
 export PACKAGE=$(echo $PROJECT | cut -d'/' -f3)
@@ -28,3 +28,11 @@ export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
 
 # Install coverage tools
 go get github.com/phayes/go-scrutinize
+
+# Set-up github and bitbucket for private go dependancies
+if [ $DOMAIN == 'github.com' ] then
+  git config --global url.ssh://git@github.com/.insteadOf https://github.com/
+fi
+if [ $DOMAIN == 'bitbucket.org' ] then
+  git config --global url.ssh://git@bitbucket.org/.insteadOf https://bitbucket.org/
+fi
