@@ -38,5 +38,5 @@ then
 fi
 if [[ $DOMAIN == "bitbucket.org" ]] 
 then
-  git config --global url.https://$BITBUCKET_TOKEN@bitbucket.org/.insteadOf "https://bitbucket.org/";
+  git config --global url.https://$BITBUCKET_TOKEN:$BITBUCKET_TOKEN_SECRET@bitbucket.org/.insteadOf "https://bitbucket.org/";
 fi
