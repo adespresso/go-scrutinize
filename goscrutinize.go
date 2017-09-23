@@ -141,7 +141,7 @@ func testAndCoverage() {
 	cmd = exec.Command("go", "test", "./...", "-coverprofile=coverage.out", "-race", "-v")
 	cmd.Stderr = os.Stderr // pipe stderr and stdout directly
 	cmd.Stdout = os.Stdout
-	_, err = cmd.Output()
+	err = cmd.Run()
 	if err != nil {
 		log.Fatal("go", "test", "./...", "-coverprofile=coverage.out", "-race", "-v", err)
 	}
