@@ -142,7 +142,7 @@ func testAndCoverage() {
 	cmd.Stderr = os.Stderr // pipe stderr directly
 	gocovout, err := cmd.Output()
 	if err != nil {
-		log.Fatal(goConvCmd, "test", "./...", "-race", "-v" err)
+		log.Fatal(goConvCmd, "test", "./...", "-race", "-v", err)
 	}
 
 	// Convert to clover format
