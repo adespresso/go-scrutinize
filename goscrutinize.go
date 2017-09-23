@@ -138,20 +138,11 @@ func testAndCoverage() {
 	}
 
 	// Run tests with coverage
-	cmd = exec.Command("go", "test", "./...", "-coverprofile=coverage.out", "-race", "-v")
-	cmd.Stderr = os.Stderr // pipe stderr and stdout directly
-	cmd.Stdout = os.Stdout
-	err = cmd.Run()
-	if err != nil {
-		log.Fatal("go", "test", "./...", "-coverprofile=coverage.out", "-race", "-v", err)
-	}
-
-	// Run convert to JSON
-	cmd = exec.Command(goConvCmd, "convert", "coverage.out")
+	cmd = exec.Command(goConvCmd, "test", "./...", "-race", "-v")
 	cmd.Stderr = os.Stderr // pipe stderr directly
 	gocovout, err := cmd.Output()
 	if err != nil {
-		log.Fatal(goConvCmd, "convert", "coverage.out", err)
+		log.Fatal(goConvCmd, "test", "./...", "-race", "-v", err)
 	}
 
 	// Convert to clover format
