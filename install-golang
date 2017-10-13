@@ -10,8 +10,8 @@ export OWNER=$(echo $PROJECT | cut -d'/' -f2)
 export PACKAGE=$(echo $PROJECT | cut -d'/' -f3)
 
 # Install go
-wget https://storage.googleapis.com/golang/go1.9.linux-amd64.tar.gz
-tar -xf go1.9.linux-amd64.tar.gz
+wget https://storage.googleapis.com/golang/go1.9.1.linux-amd64.tar.gz
+tar -xf go1.9.1.linux-amd64.tar.gz
 sudo mv go /usr/local
 
 # Install bzr
