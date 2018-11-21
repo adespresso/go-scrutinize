@@ -14,7 +14,7 @@ Copy and paste the yml below into your `.scrutinizer.yml` file to get started.
 build:
     dependencies:
         before:
-            - 'source <(curl -fsSL https://raw.githubusercontent.com/phayes/go-scrutinize/master/install-golang)'
+            - 'source <(curl -fsSL https://raw.githubusercontent.com/adespresso/go-scrutinize/master/install-golang)'
 
     tests:
         override:
